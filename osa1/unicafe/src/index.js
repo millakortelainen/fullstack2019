@@ -17,11 +17,10 @@ const Button = ({ onClick, text }) => (
 
 const Statistics = ({ text, feedback }) => {
     return (
-        <div>
-            <p>
-                {text} {feedback}
-            </p>
-        </div>
+        <tr>
+            <td>{text}</td>
+            <td>{feedback}</td>
+        </tr>
     )
 }
 
@@ -34,16 +33,16 @@ const Stats = ({ good, neutral, bad, allClicks }) => {
         )
     }
     return (
-        <div>
-            <Statistics text='good' feedback={good} />
-            <Statistics text='neutral' feedback={neutral} />
-            <Statistics text='bad' feedback={bad} />
-            <Statistics text='all' feedback={allClicks.length} />
-            <Average good={good} bad={bad} all={allClicks.length} />
-            <Percent text='positive' good={good} all={allClicks.length} />
-
-        </div>
-
+        <table>
+            <tbody>
+                <Statistics text='good' feedback={good} />
+                <Statistics text='neutral' feedback={neutral} />
+                <Statistics text='bad' feedback={bad} />
+                <Statistics text='all' feedback={allClicks.length} />
+                <Average good={good} bad={bad} all={allClicks.length} />
+                <Percent text='positive' good={good} all={allClicks.length} />
+            </tbody>
+        </table>
     )
 }
 
@@ -57,11 +56,10 @@ const Average = ({ good, bad, all }) => {
 const Percent = ({ text, all, good }) => {
     const percent = (good / all) * 100
     return (
-        <div>
-            <p>
-                {text} {percent} %
-            </p>
-        </div>
+        <tr>
+            <td>{text}</td>
+            <td>{percent}%</td>
+        </tr>
     )
 }
 
@@ -85,8 +83,7 @@ const App = () => {
         setAll(allClicks.concat('bad'))
         setBad(bad + 1)
 
-    }
-
+    }     
 
     return (
         <div>
@@ -95,7 +92,8 @@ const App = () => {
             <Button onClick={handleNeutralClick} text='neutral' />
             <Button onClick={handleBadClick} text='bad' />
             <Header header="statistics" />
-        <Stats good={good} neutral={neutral} bad={bad} allClicks={allClicks}/>
+            <Stats good={good} neutral={neutral} bad={bad} allClicks={allClicks} />
+
         </div>
     )
 }
