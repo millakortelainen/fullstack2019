@@ -1,84 +1,83 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-//const App = () => (
-// <div>
-//  <p>Hello world</p>
-// </div>
-//)
-/*const App = () => {
-    console.log('Hello from komponentti')
-    return (
-      <div>
-        <p>Hello world</p>
-      </div>
-    )
-  }*/
+const Display = ({ counter }) => <div>{counter}</div>
 
-/*const App = () => {
-    const now = new Date()
-    const a = 10
-    const b = 20
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}>
+    {text}
+  </button>
+)
 
-    return (
-        <div>
-            <p>Hello world, it is {now.toString()}</p>
-            <p>
-                {a} plus {b} is {a + b}
-            </p>
-        </div>
-    )
+/*const App = (props) => {
+  const [ counter, setCounter ] = useState(0)
+  const setToValue = (value) => setCounter(value)
+
+
+  return (
+    <div>
+      <Display counter={counter}/>
+      <Button
+        onClick={() => setToValue(counter + 1)}
+        text='plus'
+      />
+      <Button
+        onClick={() => setToValue(counter - 1)}
+        text='minus'
+      />
+      <Button
+        onClick={() => setToValue(0)}
+        text='zero'
+      />
+    </div>
+  )
 }*/
 
-/*const Hello = () => {
+const History = (props) => {
+  if (props.allClicks.length === 0) {
     return (
       <div>
-        <p>Hello world</p>
-      </div>
-    )
-  }*/
-
- /* const Hello = (props) => {
-    return (
-      <div>
-        <p>Hello {props.name}</p>
+        the app is used by pressing the buttons
       </div>
     )
   }
-  
-  const App = () => {
-    return (
-      <div>
-        <h1>Greetings</h1>
-        <Hello name="Milla"/>
-        <Hello name="Saska"/>
-        <Hello name="Papu"/>
-      </div>
-    )
-  }*/
 
-  const Hello = (props) => {
-    return (
-      <div>
-        <p>
-          Hello {props.name}, you are {props.age} years old
-        </p>
-      </div>
-    )
-  }
-  
-  const App = () => {
-    const nimi = 'Pekka'
-    const ika = 10
-  
-    return (
-      <div>
-        <h1>Greetings</h1>
-        <Hello name="Maya" age={26 + 10} />
-        <Hello name={nimi} age={ika} />
-      </div>
-    )
-  }
-  
+  return (
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
+  )
+}
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const App = (props) => {
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
+  }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+  }
+
+  return (
+    <div>
+      <div>
+        {left}
+        <Button onClick={handleLeftClick} text='left' />
+        <Button onClick={handleRightClick} text='right' />
+        {right}
+        <History allClicks={allClicks} />
+      </div>
+    </div>
+  )
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)
